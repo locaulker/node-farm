@@ -40,15 +40,15 @@ const tempProduct = fs.readFileSync(
 
 const replaceTemplate = (temp, product) => {
   let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName)
-  output = temp.replace(/{%IMAGE%}/g, product.image)
-  output = temp.replace(/{%PRICE%}/g, product.price)
-  output = temp.replace(/{%FROM%}/g, product.from)
-  output = temp.replace(/{%NUTRIENTS%}/g, product.nutrients)
-  output = temp.replace(/{%QUANTITY%}/g, product.quantity)
-  output = temp.replace(/{%DESCRIPTION%}/g, product.description)
-  output = temp.replace(/{%ID%}/g, product.id)
+  output = output.replace(/{%IMAGE%}/g, product.image)
+  output = output.replace(/{%PRICE%}/g, product.price)
+  output = output.replace(/{%FROM%}/g, product.from)
+  output = output.replace(/{%NUTRIENTS%}/g, product.nutrients)
+  output = output.replace(/{%QUANTITY%}/g, product.quantity)
+  output = output.replace(/{%DESCRIPTION%}/g, product.description)
+  output = output.replace(/{%ID%}/g, product.id)
 
-  if (!product.organic) output = temp.replace(/{%NOT_ORGANIC%}/g, "not-organic")
+  if (!product.organic) output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic")
   return output
 }
 
@@ -64,7 +64,6 @@ const server = http.createServer((req, res) => {
 
     const cardsHtml = dataObj.map(el => replaceTemplate(tempCard, el)).join("")
     const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml)
-
     res.end(output)
 
     // PRODUCT PAGE
@@ -84,7 +83,7 @@ const server = http.createServer((req, res) => {
       "Content-type": "text/html",
       "My-own-header": "Hello-World"
     })
-    res.end("<h1>Page cannot be found!</h1>")
+    res.end("<h1>Page not found!</h1>")
   }
 })
 
